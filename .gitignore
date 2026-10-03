@@ -1,0 +1,34 @@
+@"
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# Runtime
+logs/*
+!logs/.gitkeep
+
+# Generated reports
+reports/*.pdf
+reports/*.html
+reports/*.json
+
+# Secrets / local configuration
+.env
+config/ports.json
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Build artifacts
+build/
+*.uf2
+*.elf
+*.bin
+"@ | Set-Content .gitignore

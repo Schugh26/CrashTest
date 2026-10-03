@@ -1,0 +1,7 @@
+@"
+pyserial
+flask
+pillow
+reportlab
+python-dotenv
+"@ | Set-Content requirements.txt
