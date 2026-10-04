@@ -115,7 +115,7 @@ Deterministic PASS / FAIL
 The FREE-WILi OG acts like a small embedded validation console rather than a passive development board.
 
 <p align="center">
-  <img src="docs/images/hardware-pass.jpg" alt="FREE-WILi OG showing CrashTest PASS" width="72%">
+  <img src="docs/images/hardware-pass.png" alt="FREE-WILi OG showing CrashTest PASS" width="72%">
 </p>
 
 The physical UI communicates test state directly:
@@ -145,12 +145,12 @@ The physical UI communicates test state directly:
 
 <table>
 <tr>
-<td align="center"><b>Armed</b><br><img src="docs/images/hardware-armed.jpg" width="360"></td>
-<td align="center"><b>Recovering</b><br><img src="docs/images/hardware-recovering.jpg" width="360"></td>
+<td align="center"><b>Armed</b><br><img src="docs/images/hardware-armed.png" width="360"></td>
+<td align="center"><b>Recovering</b><br><img src="docs/images/hardware-recovering.png" width="360"></td>
 </tr>
 <tr>
-<td align="center"><b>Pass</b><br><img src="docs/images/hardware-pass.jpg" width="360"></td>
-<td align="center"><b>Fail</b><br><img src="docs/images/hardware-fail.jpg" width="360"></td>
+<td align="center"><b>Pass</b><br><img src="docs/images/hardware-pass.png" width="360"></td>
+<td align="center"><b>Fail</b><br><img src="docs/images/hardware-fail.png" width="360"></td>
 </tr>
 </table>
 
@@ -482,10 +482,10 @@ CrashTest/
 |
 |-- docs/
 |   |-- images/
-|   |   |-- hardware-pass.jpg
-|   |   |-- hardware-fail.jpg
-|   |   |-- hardware-armed.jpg
-|   |   |-- hardware-recovering.jpg
+|   |   |-- hardware-pass.png
+|   |   |-- hardware-fail.png
+|   |   |-- hardware-armed.png
+|   |   |-- hardware-recovering.png
 |   |   |-- dashboard-pass.png
 |   |   |-- dashboard-fail.png
 |   |   |-- dashboard-v1.png
@@ -732,10 +732,10 @@ It includes the deterministic result, system configuration, fault definition, te
 All current project images used during the build are retained under `docs/images/`:
 
 ```text
-hardware-pass.jpg
-hardware-fail.jpg
-hardware-armed.jpg
-hardware-recovering.jpg
+hardware-pass.png
+hardware-fail.png
+hardware-armed.png
+hardware-recovering.png
 dashboard-pass.png
 dashboard-fail.png
 dashboard-v1.png
