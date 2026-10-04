@@ -8,26 +8,31 @@
 // ICM-20948:
 //   SDA -> GPIO21
 //   SCL -> GPIO22
-//   I2C address -> 0x68
+//   VCC -> 3.3V
+//   GND -> GND
 //
 // Temporary actuator:
 //   GPIO17 -> resistor -> LED -> GND
 //
-// Behavior:
-//   Sensor healthy  -> actuator LED ON
-//   Sensor lost >500 ms -> SAFE STATE -> actuator LED OFF
+// FREE-WILi fault control:
+//   Maestro GPIO27 -> ESP32 GPIO18
+//   Maestro GND    -> ESP32 GND
+//
+// Logic:
+//   GPIO18 LOW  = normal operation
+//   GPIO18 HIGH = injected SENSOR fault
 // ============================================================
 
-#define SDA_PIN          21
-#define SCL_PIN          22
-#define ACTUATOR_PIN     17
+#define SDA_PIN              21
+#define SCL_PIN              22
+#define ACTUATOR_PIN         17
+#define FAULT_IN_PIN         18
 
-// ICM-20948 detected at 0x68
-#define AD0_VAL          0
+#define AD0_VAL              0
 
-#define SENSOR_TIMEOUT_MS 500
-#define RETRY_INTERVAL_MS 1000
-#define TELEMETRY_MS      100
+#define SENSOR_TIMEOUT_MS    500
+#define RETRY_INTERVAL_MS    1000
+#define TELEMETRY_MS         100
 
 ICM_20948_I2C imu;
 
@@ -39,13 +44,11 @@ unsigned long lastRetryMs = 0;
 unsigned long lastTelemetryMs = 0;
 
 
-// ------------------------------------------------------------
-// SAFE STATE
-// ------------------------------------------------------------
-void enterSafeState()
+// ============================================================
+// SAFE STATE - REAL SENSOR FAILURE
+// ============================================================
+void enterSensorSafeState()
 {
-    // Temporary actuator = LED.
-    // Later this becomes motor / actuator disable.
     digitalWrite(ACTUATOR_PIN, LOW);
 
     sensorHealthy = false;
@@ -62,9 +65,30 @@ void enterSafeState()
 }
 
 
-// ------------------------------------------------------------
+// ============================================================
+// SAFE STATE - FREE-WILI INJECTED FAULT
+// ============================================================
+void enterInjectedSafeState()
+{
+    digitalWrite(ACTUATOR_PIN, LOW);
+
+    sensorHealthy = false;
+
+    if (!faultReported)
+    {
+        Serial.println("FAULT,SENSOR");
+        Serial.println("ROOT_CAUSE,INJECTED_SENSOR_FAULT");
+        Serial.println("SAFE,OK");
+        Serial.println("STATE,FAULT");
+
+        faultReported = true;
+    }
+}
+
+
+// ============================================================
 // INITIALIZE / RECOVER IMU
-// ------------------------------------------------------------
+// ============================================================
 bool startIMU()
 {
     imu.begin(Wire, AD0_VAL);
@@ -93,9 +117,9 @@ bool startIMU()
 }
 
 
-// ------------------------------------------------------------
+// ============================================================
 // SETUP
-// ------------------------------------------------------------
+// ============================================================
 void setup()
 {
     Serial.begin(115200);
@@ -104,32 +128,50 @@ void setup()
     Serial.println();
     Serial.println("BOOT,CRASHTEST,SINGLE_NODE_MVP");
 
+    // Temporary actuator
     pinMode(ACTUATOR_PIN, OUTPUT);
-
-    // Always boot into a safe actuator state.
     digitalWrite(ACTUATOR_PIN, LOW);
 
+    // FREE-WILi fault input
+    pinMode(FAULT_IN_PIN, INPUT_PULLDOWN);
+
+    // I2C
     Wire.begin(SDA_PIN, SCL_PIN);
     Wire.setClock(100000);
-
-    // Prevent a deliberately broken I2C bus from hanging forever.
     Wire.setTimeOut(50);
 
     if (!startIMU())
     {
-        enterSafeState();
+        enterSensorSafeState();
     }
 
     Serial.println("READY");
 }
 
 
-// ------------------------------------------------------------
+// ============================================================
 // MAIN LOOP
-// ------------------------------------------------------------
+// ============================================================
 void loop()
 {
     unsigned long now = millis();
+
+    // ========================================================
+    // FREE-WILI HARDWARE COMMAND INPUT
+    // ========================================================
+    bool injectedFault =
+        digitalRead(FAULT_IN_PIN) == HIGH;
+
+    if (injectedFault)
+    {
+        enterInjectedSafeState();
+
+        // Do not attempt recovery while FREE-WILi
+        // is intentionally holding the fault HIGH.
+        delay(20);
+        return;
+    }
+
 
     // ========================================================
     // NORMAL SENSOR OPERATION
@@ -144,10 +186,9 @@ void loop()
             {
                 lastGoodSensorMs = now;
 
-                // Healthy system -> temporary actuator active.
+                // Healthy DUT -> actuator enabled
                 digitalWrite(ACTUATOR_PIN, HIGH);
 
-                // Send telemetry every ~100 ms.
                 if (now - lastTelemetryMs >= TELEMETRY_MS)
                 {
                     lastTelemetryMs = now;
@@ -163,17 +204,21 @@ void loop()
         }
 
         // ====================================================
-        // SENSOR WATCHDOG
+        // REAL SENSOR WATCHDOG
         // ====================================================
         if (now - lastGoodSensorMs > SENSOR_TIMEOUT_MS)
         {
-            enterSafeState();
+            enterSensorSafeState();
         }
     }
 
 
     // ========================================================
-    // AUTOMATIC RECOVERY
+    // RECOVERY
+    //
+    // Reached when:
+    // - a real sensor fault clears, OR
+    // - FREE-WILi GPIO27 goes back LOW
     // ========================================================
     if (!sensorHealthy &&
         now - lastRetryMs >= RETRY_INTERVAL_MS)

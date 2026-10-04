@@ -32,3 +32,25 @@ build/
 *.elf
 *.bin
 "@ | Set-Content .gitignore
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Runtime CrashTest artifacts
+reports/*
+!reports/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Local backups
+*_backup.py
+*_working_backup.py
+*_before_report.py
+*broken_backup*
+main_broken_backup.c
+
+# Local config / secrets
+.env
+*.env
+

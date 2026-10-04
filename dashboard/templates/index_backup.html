@@ -1,0 +1,1554 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>CrashTest</title>
+
+<style>
+
+:root {
+    --bg: #07090c;
+    --panel: #11161d;
+    --panel2: #171d25;
+    --border: #2b333d;
+
+    --text: #edf2f7;
+    --muted: #7f8b99;
+
+    --green: #39e875;
+    --yellow: #ffc638;
+    --red: #ff414d;
+    --blue: #3e9bff;
+    --cyan: #43eadb;
+    --white: #f1f1ed;
+    --purple: #a182ff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% -10%,
+            #182129,
+            #07090c 45%
+        );
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        sans-serif;
+}
+
+.page {
+    width: min(1500px, 96%);
+    margin: auto;
+    padding: 24px 0 45px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.brand {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -1.2px;
+}
+
+.brand span {
+    color: var(--cyan);
+}
+
+.subtitle {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.online {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #aeb8c4;
+    font-size: 12px;
+}
+
+.online-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 12px
+        rgba(57,232,117,.75);
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 560px 1fr;
+    gap: 20px;
+}
+
+
+/* FREE-WILI BODY */
+
+.wili {
+    border-radius: 22px;
+
+    padding: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #232629,
+            #121416
+        );
+
+    border:
+        2px solid #44494e;
+
+    box-shadow:
+        0 28px 70px
+        rgba(0,0,0,.5);
+}
+
+.wili-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wili-name {
+    font-size: 19px;
+    font-weight: 850;
+}
+
+.live-mirror {
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 1px;
+}
+
+
+/* LCD */
+
+.lcd {
+    margin-top: 18px;
+
+    height: 205px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #071311,
+            #050b0a
+        );
+
+    border:
+        2px solid #354d49;
+
+    border-radius: 9px;
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(0,0,0,.8);
+}
+
+.lcd-brand {
+    color: var(--cyan);
+
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+}
+
+.lcd-state {
+    margin-top: 25px;
+
+    font-size: 31px;
+    font-weight: 900;
+}
+
+.lcd-sub {
+    margin-top: 10px;
+
+    color: #8ba29f;
+
+    font-size: 13px;
+}
+
+.lcd-progress {
+    height: 7px;
+    width: 88%;
+
+    margin-top: 25px;
+
+    border-radius: 10px;
+
+    background: var(--blue);
+
+    transition: .25s;
+}
+
+
+/* LEDS */
+
+.led-bank {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding:
+        28px 8px
+        25px;
+}
+
+.led-container {
+    text-align: center;
+}
+
+.led {
+    width: 18px;
+    height: 18px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background: #22272b;
+
+    border:
+        2px solid #343a40;
+
+    transition: .18s;
+}
+
+.led-name {
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.led.green.on {
+    background: var(--green);
+
+    box-shadow:
+        0 0 16px
+        var(--green);
+}
+
+.led.yellow.on {
+    background: var(--yellow);
+
+    box-shadow:
+        0 0 16px
+        var(--yellow);
+}
+
+.led.red.on {
+    background: var(--red);
+
+    box-shadow:
+        0 0 16px
+        var(--red);
+}
+
+.led.blue.on {
+    background: var(--blue);
+
+    box-shadow:
+        0 0 16px
+        var(--blue);
+}
+
+
+/* BUTTONS */
+
+.controls-title {
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.control {
+    width: 92px;
+    text-align: center;
+}
+
+.hardware-button {
+    width: 60px;
+    height: 60px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    border:
+        4px solid #070809;
+
+    box-shadow:
+        0 8px 8px
+        rgba(0,0,0,.55);
+
+    transition:
+        transform .09s,
+        box-shadow .09s,
+        filter .09s;
+}
+
+.hardware-button.pressed {
+    transform:
+        translateY(6px);
+
+    box-shadow:
+        0 1px 2px
+        rgba(0,0,0,.6);
+
+    filter:
+        brightness(1.2);
+}
+
+.hardware-button.white {
+    background: var(--white);
+    cursor: pointer;
+}
+
+.hardware-button.yellow {
+    background: var(--yellow);
+}
+
+.hardware-button.green {
+    background: var(--green);
+}
+
+.hardware-button.blue {
+    background: var(--blue);
+}
+
+.hardware-button.red {
+    background: var(--red);
+}
+
+.button-label {
+    margin-top: 8px;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.button-action {
+    margin-top: 2px;
+
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.last-input {
+    margin-top: 23px;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    background: #141719;
+
+    font-size: 12px;
+
+    color: #c7ced6;
+}
+
+
+/* RIGHT SIDE */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.card {
+    background:
+        rgba(17,22,29,.94);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 18px;
+}
+
+.hero {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(57,232,117,.08),
+            transparent 45%
+        ),
+        var(--panel);
+}
+
+.card-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    font-weight: 850;
+}
+
+.hero-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.test-title {
+    font-size: 23px;
+    font-weight: 850;
+
+    margin-top: 10px;
+}
+
+.verdict {
+    padding:
+        8px 14px;
+
+    border-radius: 100px;
+
+    font-weight: 900;
+
+    background:
+        rgba(62,155,255,.09);
+
+    color: var(--blue);
+}
+
+.verdict.pass {
+    color: var(--green);
+
+    background:
+        rgba(57,232,117,.1);
+}
+
+.verdict.fail {
+    color: var(--red);
+
+    background:
+        rgba(255,65,77,.1);
+}
+
+.live-line {
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.metrics {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.metric-value {
+    font-size: 21px;
+
+    margin-top: 9px;
+
+    font-weight: 900;
+}
+
+.two-column {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+.timeline-row {
+    display: grid;
+
+    grid-template-columns:
+        10px 74px 1fr;
+
+    gap: 9px;
+
+    padding: 7px 0;
+
+    align-items: center;
+
+    font-size: 12px;
+}
+
+.timeline-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--blue);
+}
+
+.timeline-time {
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.ai-card {
+    border-top:
+        2px solid var(--purple);
+}
+
+.ai-tag {
+    color: #b7a2ff;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: .9px;
+}
+
+.ai-body {
+    margin-top: 13px;
+
+    color: #b7c0cb;
+
+    line-height: 1.6;
+
+    font-size: 12px;
+}
+
+.report-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.report-button {
+    border: none;
+
+    border-radius: 100px;
+
+    padding:
+        14px 20px;
+
+    cursor: pointer;
+
+    background: var(--white);
+
+    color: #090b0d;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 5px 16px
+        rgba(0,0,0,.35);
+}
+
+.report-button:active {
+    transform:
+        translateY(3px);
+}
+
+.history-row {
+    display: grid;
+
+    grid-template-columns:
+        1.7fr 1.3fr .8fr .6fr;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    border-top:
+        1px solid #252c35;
+
+    font-size: 11px;
+}
+
+.good {
+    color: var(--green);
+}
+
+.bad {
+    color: var(--red);
+}
+
+
+@media(max-width:1100px) {
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wili {
+        max-width: 600px;
+        margin: auto;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+<div class="top">
+
+<div>
+
+<div class="brand">
+Crash<span>Test</span>
+</div>
+
+<div class="subtitle">
+Firmware resilience validation console
+</div>
+
+</div>
+
+
+<div class="online">
+
+<div class="online-dot"></div>
+
+FREE-WILi connected
+
+</div>
+
+</div>
+
+
+
+<div class="main-grid">
+
+
+<section class="wili">
+
+
+<div class="wili-top">
+
+<div class="wili-name">
+FREE-WILi OG
+</div>
+
+<div class="live-mirror">
+LIVE MIRROR
+</div>
+
+</div>
+
+
+
+<div class="lcd">
+
+<div class="lcd-brand">
+CRASHTEST
+</div>
+
+<div
+    class="lcd-state"
+    id="lcdState"
+>
+READY
+</div>
+
+<div
+    class="lcd-sub"
+    id="lcdSub"
+>
+YELLOW = START
+</div>
+
+<div
+    class="lcd-progress"
+    id="lcdProgress"
+></div>
+
+</div>
+
+
+
+<div class="led-bank">
+
+<div class="led-container">
+<div class="led green on" id="ledPwr"></div>
+<div class="led-name">PWR</div>
+</div>
+
+<div class="led-container">
+<div class="led blue on" id="ledLink"></div>
+<div class="led-name">LINK</div>
+</div>
+
+<div class="led-container">
+<div class="led green" id="ledDut"></div>
+<div class="led-name">DUT</div>
+</div>
+
+<div class="led-container">
+<div class="led yellow" id="ledInj"></div>
+<div class="led-name">INJ</div>
+</div>
+
+<div class="led-container">
+<div class="led red" id="ledFault"></div>
+<div class="led-name">FLT</div>
+</div>
+
+<div class="led-container">
+<div class="led green" id="ledSafe"></div>
+<div class="led-name">SAFE</div>
+</div>
+
+<div class="led-container">
+<div class="led blue" id="ledRecovery"></div>
+<div class="led-name">REC</div>
+</div>
+
+</div>
+
+
+
+<div class="controls-title">
+PHYSICAL CONTROLS
+</div>
+
+
+<div class="buttons">
+
+<div class="control">
+
+<div
+    class="hardware-button white"
+    id="whiteButton"
+></div>
+
+<div class="button-label">
+WHITE
+</div>
+
+<div class="button-action">
+REPORT
+</div>
+
+</div>
+
+
+<div class="control">
+
+<div
+    class="hardware-button yellow"
+    id="yellowButton"
+></div>
+
+<div class="button-label">
+YELLOW
+</div>
+
+<div class="button-action">
+START
+</div>
+
+</div>
+
+
+<div class="control">
+
+<div
+    class="hardware-button green"
+    id="greenButton"
+></div>
+
+<div class="button-label">
+GREEN
+</div>
+
+<div class="button-action">
+INJECT
+</div>
+
+</div>
+
+
+<div class="control">
+
+<div
+    class="hardware-button blue"
+    id="blueButton"
+></div>
+
+<div class="button-label">
+BLUE
+</div>
+
+<div class="button-action">
+AUX
+</div>
+
+</div>
+
+
+<div class="control">
+
+<div
+    class="hardware-button red"
+    id="redButton"
+></div>
+
+<div class="button-label">
+RED
+</div>
+
+<div class="button-action">
+STOP
+</div>
+
+</div>
+
+</div>
+
+
+<div
+    class="last-input"
+    id="lastInput"
+>
+Waiting for FREE-WILi input.
+</div>
+
+</section>
+
+
+
+<section class="dashboard">
+
+
+<div class="card hero">
+
+<div class="hero-line">
+
+<div>
+
+<div class="card-label">
+CURRENT TEST
+</div>
+
+<div class="test-title">
+Sensor / I2C Fault Injection
+</div>
+
+</div>
+
+<div
+    class="verdict"
+    id="verdict"
+>
+—
+</div>
+
+</div>
+
+
+<div
+    class="live-line"
+    id="liveLine"
+>
+Waiting for test.
+</div>
+
+</div>
+
+
+
+<div class="metrics">
+
+<div class="card">
+<div class="card-label">DETECTION LATENCY</div>
+<div class="metric-value" id="latency">—</div>
+</div>
+
+<div class="card">
+<div class="card-label">SAFE STATE</div>
+<div class="metric-value" id="safe">—</div>
+</div>
+
+<div class="card">
+<div class="card-label">RECOVERY</div>
+<div class="metric-value" id="recovery">—</div>
+</div>
+
+<div class="card">
+<div class="card-label">ROOT CAUSE</div>
+<div class="metric-value" id="rootCause">—</div>
+</div>
+
+</div>
+
+
+
+<div class="two-column">
+
+<div class="card">
+
+<div class="card-label">
+TEST TIMELINE
+</div>
+
+<div id="timeline">
+No test evidence yet.
+</div>
+
+</div>
+
+
+<div class="card ai-card">
+
+<div class="ai-tag">
+FETCH.AI ENGINEERING AGENT
+</div>
+
+<h3>
+Engineering assessment
+</h3>
+
+<div
+    class="ai-body"
+    id="aiBody"
+>
+Complete a test to generate engineering analysis.
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="card report-card">
+
+<div>
+
+<div class="card-label">
+ENGINEERING REPORT
+</div>
+
+<h3>
+Evidence package
+</h3>
+
+<div class="subtitle">
+Raw telemetry + deterministic verdict + AI analysis
+</div>
+
+</div>
+
+
+<button
+    class="report-button"
+    id="reportButton"
+>
+WHITE • OPEN REPORT
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-label">
+RECENT CRASHTEST RUNS
+</div>
+
+<div id="history"></div>
+
+</div>
+
+
+</section>
+
+</div>
+
+</div>
+
+
+<script>
+
+function led(id, enabled) {
+
+    document
+        .getElementById(id)
+        .classList
+        .toggle(
+            "on",
+            enabled
+        );
+}
+
+
+function applyState(state) {
+
+    state =
+        state || "IDLE";
+
+
+    led("ledPwr", true);
+    led("ledLink", true);
+
+
+    led(
+        "ledDut",
+        [
+            "HEALTHY",
+            "INJECTING",
+            "FAULT",
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(state)
+    );
+
+
+    led(
+        "ledInj",
+        state === "INJECTING"
+    );
+
+
+    led(
+        "ledFault",
+        state === "FAULT"
+        || state === "FAIL"
+    );
+
+
+    led(
+        "ledSafe",
+        [
+            "FAULT",
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(state)
+    );
+
+
+    led(
+        "ledRecovery",
+        [
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(state)
+    );
+
+
+    const title =
+        document.getElementById(
+            "lcdState"
+        );
+
+    const sub =
+        document.getElementById(
+            "lcdSub"
+        );
+
+    const progress =
+        document.getElementById(
+            "lcdProgress"
+        );
+
+
+    if (
+        state === "IDLE"
+        || state === "HOME"
+    ) {
+
+        title.textContent =
+            "READY";
+
+        sub.textContent =
+            "YELLOW = START";
+
+        progress.style.background =
+            "var(--blue)";
+    }
+
+
+    else if (
+        state === "ARMED"
+    ) {
+
+        title.textContent =
+            "SYSTEM ARMED";
+
+        sub.textContent =
+            "GREEN = INJECT • RED = STOP";
+
+        progress.style.background =
+            "var(--yellow)";
+    }
+
+
+    else if (
+        state === "CHECKING"
+    ) {
+
+        title.textContent =
+            "CHECKING DUT";
+
+        sub.textContent =
+            "Verifying baseline...";
+
+        progress.style.background =
+            "var(--blue)";
+    }
+
+
+    else if (
+        state === "HEALTHY"
+    ) {
+
+        title.textContent =
+            "DUT HEALTHY";
+
+        sub.textContent =
+            "Baseline verified";
+
+        progress.style.background =
+            "var(--green)";
+    }
+
+
+    else if (
+        state === "INJECTING"
+    ) {
+
+        title.textContent =
+            "INJECTING";
+
+        sub.textContent =
+            "Sensor fault active";
+
+        progress.style.background =
+            "var(--yellow)";
+    }
+
+
+    else if (
+        state === "FAULT"
+    ) {
+
+        title.textContent =
+            "FAULT DETECTED";
+
+        sub.textContent =
+            "Checking safe state";
+
+        progress.style.background =
+            "var(--red)";
+    }
+
+
+    else if (
+        state === "RECOVERING"
+        || state === "VERIFYING"
+    ) {
+
+        title.textContent =
+            "RECOVERING";
+
+        sub.textContent =
+            "Verifying telemetry";
+
+        progress.style.background =
+            "var(--blue)";
+    }
+
+
+    else if (
+        state === "PASS"
+    ) {
+
+        title.textContent =
+            "PASS";
+
+        sub.textContent =
+            "CrashTest complete";
+
+        progress.style.background =
+            "var(--green)";
+    }
+
+
+    else if (
+        state === "FAIL"
+    ) {
+
+        title.textContent =
+            "FAIL";
+
+        sub.textContent =
+            "Validation failed";
+
+        progress.style.background =
+            "var(--red)";
+    }
+}
+
+
+async function updateLive() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/live"
+            );
+
+        const live =
+            await response.json();
+
+
+        applyState(
+            live.state
+        );
+
+
+        document.getElementById(
+            "liveLine"
+        ).textContent =
+            live.last_line
+            || "Waiting for test.";
+
+    } catch {}
+}
+
+
+async function updateReports() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/reports"
+            );
+
+        const reports =
+            await response.json();
+
+
+        if (!reports.length)
+            return;
+
+
+        const latest =
+            reports[0];
+
+
+        const verdict =
+            document.getElementById(
+                "verdict"
+            );
+
+
+        verdict.textContent =
+            latest.verdict;
+
+
+        verdict.className =
+            "verdict "
+            + (
+                latest.verdict === "PASS"
+                ? "pass"
+                : "fail"
+            );
+
+
+        document.getElementById(
+            "latency"
+        ).textContent =
+            latest.latency == null
+            ? "N/A"
+            : latest.latency + " ms";
+
+
+        document.getElementById(
+            "safe"
+        ).textContent =
+            latest.safe;
+
+
+        document.getElementById(
+            "recovery"
+        ).textContent =
+            latest.recovery;
+
+
+        document.getElementById(
+            "rootCause"
+        ).textContent =
+            latest.root_cause;
+
+
+        const detailResponse =
+            await fetch(
+                "/api/report/"
+                + latest.test_id
+            );
+
+
+        const detail =
+            await detailResponse.json();
+
+
+        const timeline =
+            document.getElementById(
+                "timeline"
+            );
+
+        timeline.innerHTML = "";
+
+
+        for (
+            const event
+            of detail.timeline || []
+        ) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "timeline-row";
+
+
+            row.innerHTML = `
+                <div
+                    class="timeline-dot"
+                ></div>
+
+                <div
+                    class="timeline-time"
+                >
+                    ${
+                        event.timestamp
+                        || ""
+                    }
+                </div>
+
+                <div>
+                    ${event.message}
+                </div>
+            `;
+
+
+            timeline.appendChild(
+                row
+            );
+        }
+
+
+        const ai =
+            detail.ai || {};
+
+
+        document.getElementById(
+            "aiBody"
+        ).textContent =
+            ai.executive_summary
+            || ai.raw
+            || "AI analysis pending.";
+
+
+        const history =
+            document.getElementById(
+                "history"
+            );
+
+
+        history.innerHTML = "";
+
+
+        for (
+            const report
+            of reports.slice(0, 6)
+        ) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "history-row";
+
+
+            row.innerHTML = `
+                <div>
+                    ${report.test_id}
+                </div>
+
+                <div>
+                    ${report.root_cause}
+                </div>
+
+                <div>
+                    ${
+                        report.latency == null
+                        ? "N/A"
+                        : report.latency
+                            + " ms"
+                    }
+                </div>
+
+                <div
+                    class="${
+                        report.verdict
+                        === "PASS"
+                        ? "good"
+                        : "bad"
+                    }"
+                >
+                    ${report.verdict}
+                </div>
+            `;
+
+
+            history.appendChild(
+                row
+            );
+        }
+
+    } catch {}
+}
+
+
+document
+    .getElementById(
+        "whiteButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const button =
+                document.getElementById(
+                    "whiteButton"
+                );
+
+
+            button.classList.add(
+                "pressed"
+            );
+
+
+            setTimeout(
+                () => {
+                    button
+                        .classList
+                        .remove(
+                            "pressed"
+                        );
+                },
+                300
+            );
+
+
+            window.open(
+                "/latest-report",
+                "_blank"
+            );
+        }
+    );
+
+
+document
+    .getElementById(
+        "reportButton"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            window.open(
+                "/latest-report",
+                "_blank"
+            );
+        }
+    );
+
+
+async function refresh() {
+
+    await updateLive();
+    await updateReports();
+}
+
+
+refresh();
+
+
+setInterval(
+    refresh,
+    500
+);
+
+</script>
+
+</body>
+
+</html>

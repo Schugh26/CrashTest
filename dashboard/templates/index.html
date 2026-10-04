@@ -1,0 +1,4220 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>CrashTest • Firmware Validation Console</title>
+
+
+<style>
+
+:root {
+
+    --bg:
+        #070b11;
+
+    --bg2:
+        #0b1118;
+
+    --surface:
+        #0e151e;
+
+    --surface2:
+        #111b26;
+
+    --surface3:
+        #151f2b;
+
+    --border:
+        #263546;
+
+    --text:
+        #edf3fb;
+
+    --muted:
+        #8090a3;
+
+    --green:
+        #37f17c;
+
+    --green-soft:
+        rgba(55,241,124,.12);
+
+    --yellow:
+        #ffcb38;
+
+    --red:
+        #ff4d59;
+
+    --blue:
+        #449aff;
+
+    --cyan:
+        #46ead6;
+
+    --purple:
+        #ad7cff;
+
+    --white:
+        #f0f0ed;
+
+    --device:
+        #12181c;
+
+    --screen:
+        #020808;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+
+    min-height: 100%;
+
+    background:
+        radial-gradient(
+            circle at 30% -10%,
+            #122131 0,
+            #070b11 40%,
+            #05080c 100%
+        );
+
+    color:
+        var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+body {
+
+    min-height:
+        100vh;
+}
+
+
+/* ======================================================
+   APP LAYOUT
+====================================================== */
+
+.app {
+
+    display: grid;
+
+    grid-template-columns:
+        76px 1fr;
+
+    min-height:
+        100vh;
+}
+
+
+.sidebar {
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    height:
+        100vh;
+
+    border-right:
+        1px solid #192634;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0c131b,
+            #090e14
+        );
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    padding:
+        20px 10px;
+
+    gap:
+        14px;
+}
+
+
+.side-logo {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    border:
+        1px solid #2a3a4b;
+
+    border-radius:
+        14px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    font-weight:
+        900;
+
+    color:
+        var(--cyan);
+
+    margin-bottom:
+        12px;
+}
+
+
+.side-item {
+
+    width:
+        54px;
+
+    min-height:
+        62px;
+
+    border-radius:
+        12px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        6px;
+
+    color:
+        #8394a7;
+
+    font-size:
+        9px;
+
+    text-align:
+        center;
+}
+
+
+.side-item.active {
+
+    color:
+        #70b7ff;
+
+    background:
+        rgba(
+            68,
+            154,
+            255,
+            .10
+        );
+
+    border:
+        1px solid
+        rgba(
+            68,
+            154,
+            255,
+            .13
+        );
+}
+
+
+.side-icon {
+
+    font-size:
+        20px;
+}
+
+
+.side-bottom {
+
+    margin-top:
+        auto;
+}
+
+
+.main {
+
+    min-width:
+        0;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.header {
+
+    height:
+        68px;
+
+    padding:
+        0 26px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    border-bottom:
+        1px solid #192634;
+
+    background:
+        rgba(
+            7,
+            12,
+            18,
+            .87
+        );
+
+    backdrop-filter:
+        blur(20px);
+}
+
+
+.brand-wrap {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        24px;
+}
+
+
+.brand {
+
+    font-size:
+        28px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -1.2px;
+}
+
+
+.brand span {
+
+    color:
+        var(--cyan);
+}
+
+
+.header-subtitle {
+
+    color:
+        #8a9aad;
+
+    font-size:
+        12px;
+}
+
+
+.header-right {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+}
+
+
+.connection-pill {
+
+    border:
+        1px solid #2a3d52;
+
+    border-radius:
+        12px;
+
+    padding:
+        10px 14px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    color:
+        #b7c6d7;
+
+    font-size:
+        12px;
+}
+
+
+.connection-dot {
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 13px
+        var(--green);
+}
+
+
+.url-pill {
+
+    color:
+        #8fa1b5;
+
+    font-size:
+        12px;
+
+    padding:
+        10px 12px;
+}
+
+
+/* ======================================================
+   CONTENT
+====================================================== */
+
+.content {
+
+    padding:
+        14px 16px 35px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(570px, .95fr)
+        minmax(620px, 1.15fr);
+
+    gap:
+        16px;
+
+    max-width:
+        1650px;
+
+    margin:
+        auto;
+}
+
+
+/* ======================================================
+   GENERAL CARDS
+====================================================== */
+
+.card {
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                17,
+                27,
+                38,
+                .95
+            ),
+            rgba(
+                11,
+                17,
+                24,
+                .96
+            )
+        );
+
+    box-shadow:
+        0 15px 35px
+        rgba(
+            0,
+            0,
+            0,
+            .17
+        );
+}
+
+
+.label {
+
+    font-size:
+        10px;
+
+    font-weight:
+        850;
+
+    letter-spacing:
+        1.2px;
+
+    color:
+        #8294a8;
+
+    text-transform:
+        uppercase;
+}
+
+
+/* ======================================================
+   DEVICE PANEL
+====================================================== */
+
+.device-panel {
+
+    padding:
+        18px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    min-height:
+        820px;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(
+                45,
+                255,
+                126,
+                .07
+            ),
+            transparent
+            45%
+        ),
+        linear-gradient(
+            145deg,
+            #0c141c,
+            #090e14
+        );
+}
+
+
+.device-panel-head {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    margin-bottom:
+        12px;
+}
+
+
+.device-title {
+
+    font-size:
+        23px;
+
+    font-weight:
+        900;
+}
+
+
+.device-subtitle {
+
+    font-size:
+        11px;
+
+    color:
+        #8d9eb0;
+
+    margin-top:
+        4px;
+}
+
+
+.live-pill {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    padding:
+        8px 12px;
+
+    border-radius:
+        999px;
+
+    color:
+        var(--green);
+
+    background:
+        rgba(
+            55,
+            241,
+            124,
+            .08
+        );
+
+    border:
+        1px solid
+        rgba(
+            55,
+            241,
+            124,
+            .16
+        );
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .8px;
+}
+
+
+.live-pill-dot {
+
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 10px
+        var(--green);
+}
+
+
+/* ======================================================
+   FREE-WILI BODY
+====================================================== */
+
+.freewili-shell {
+
+    position:
+        relative;
+
+    margin:
+        16px auto 18px;
+
+    width:
+        min(
+            100%,
+            620px
+        );
+
+    aspect-ratio:
+        1.32 / 1;
+
+    padding:
+        22px 24px 20px;
+
+    border-radius:
+        40px;
+
+    border:
+        2px solid
+        rgba(
+            210,
+            230,
+            240,
+            .34
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                232,
+                245,
+                250,
+                .13
+            ),
+            rgba(
+                120,
+                140,
+                150,
+                .035
+            )
+        );
+
+    box-shadow:
+        inset 0 0 35px
+        rgba(
+            255,
+            255,
+            255,
+            .055
+        ),
+        0 28px 50px
+        rgba(
+            0,
+            0,
+            0,
+            .55
+        );
+
+    overflow:
+        hidden;
+}
+
+
+.freewili-shell::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        11px;
+
+    border-radius:
+        31px;
+
+    border:
+        1px solid
+        rgba(
+            220,
+            240,
+            250,
+            .12
+        );
+
+    pointer-events:
+        none;
+}
+
+
+/* corner posts */
+
+.post {
+
+    position:
+        absolute;
+
+    width:
+        29px;
+
+    height:
+        29px;
+
+    border-radius:
+        50%;
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .18
+        );
+
+    background:
+        rgba(
+            180,
+            200,
+            210,
+            .06
+        );
+}
+
+
+.post.tl {
+    left: 13px;
+    top: 13px;
+}
+
+.post.tr {
+    right: 13px;
+    top: 13px;
+}
+
+.post.bl {
+    left: 13px;
+    bottom: 13px;
+}
+
+.post.br {
+    right: 13px;
+    bottom: 13px;
+}
+
+
+/* ======================================================
+   HARDWARE LEDs — TOP OF DEVICE
+====================================================== */
+
+.hardware-leds {
+
+    position:
+        relative;
+
+    z-index:
+        5;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            7,
+            1fr
+        );
+
+    gap:
+        12px;
+
+    padding:
+        0 38px;
+
+    height:
+        50px;
+
+    align-items:
+        center;
+}
+
+
+.hw-led {
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    border-radius:
+        50%;
+
+    justify-self:
+        center;
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .22
+        );
+
+    background:
+        #172027;
+
+    box-shadow:
+        inset 0 0 9px
+        rgba(
+            0,
+            0,
+            0,
+            .9
+        );
+
+    transition:
+        .2s;
+}
+
+
+.hw-led.on.green {
+
+    background:
+        #77ff9e;
+
+    border-color:
+        #caffd7;
+
+    box-shadow:
+        0 0 7px
+        #4dff83,
+        0 0 20px
+        #28ef68,
+        0 0 35px
+        rgba(
+            40,
+            239,
+            104,
+            .65
+        );
+}
+
+
+.hw-led.on.blue {
+
+    background:
+        #7cbaff;
+
+    border-color:
+        #c6e2ff;
+
+    box-shadow:
+        0 0 7px
+        #4a9cff,
+        0 0 20px
+        #2578ff;
+}
+
+
+.hw-led.on.yellow {
+
+    background:
+        #ffe474;
+
+    box-shadow:
+        0 0 20px
+        #ffc83e;
+}
+
+
+.hw-led.on.red {
+
+    background:
+        #ff6870;
+
+    box-shadow:
+        0 0 20px
+        #ff3945;
+}
+
+
+/* ======================================================
+   LCD
+====================================================== */
+
+.hardware-middle {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 74px;
+
+    gap:
+        12px;
+
+    margin:
+        4px 18px 6px;
+
+    height:
+        calc(
+            100% - 145px
+        );
+}
+
+
+.lcd {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        5px;
+
+    border:
+        2px solid
+        rgba(
+            200,
+            220,
+            220,
+            .28
+        );
+
+    background:
+        linear-gradient(
+            180deg,
+            #040b0b,
+            #020606
+        );
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(
+            0,
+            0,
+            0,
+            .9
+        );
+}
+
+
+.lcd-header {
+
+    height:
+        52px;
+
+    padding:
+        12px 18px;
+
+    background:
+        #164425;
+
+    color:
+        #c9ffdb;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:
+        24px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        2px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    transition:
+        .25s;
+}
+
+
+.lcd-content {
+
+    padding:
+        28px 19px;
+
+    color:
+        #69dfff;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+}
+
+
+.lcd-state {
+
+    font-size:
+        30px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1px;
+}
+
+
+.lcd-message {
+
+    margin-top:
+        26px;
+
+    font-size:
+        15px;
+
+    color:
+        #7cdfff;
+}
+
+
+.lcd-action {
+
+    margin-top:
+        18px;
+
+    font-size:
+        14px;
+
+    color:
+        #b8eaff;
+}
+
+
+.lcd-footer {
+
+    position:
+        absolute;
+
+    left:
+        20px;
+
+    bottom:
+        19px;
+
+    font-size:
+        13px;
+
+    color:
+        #75dfff;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+}
+
+
+.freewili-brand-strip {
+
+    border-radius:
+        24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #111,
+            #090909
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .22
+        );
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+}
+
+
+.freewili-brand-text {
+
+    writing-mode:
+        vertical-rl;
+
+    transform:
+        rotate(
+            180deg
+        );
+
+    font-weight:
+        900;
+
+    font-size:
+        21px;
+
+    letter-spacing:
+        3px;
+
+    color:
+        white;
+}
+
+
+.freewili-brand-text span {
+
+    color:
+        #ed4141;
+}
+
+
+/* ======================================================
+   HARDWARE BUTTONS — BOTTOM
+====================================================== */
+
+.hardware-buttons {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    bottom:
+        19px;
+
+    z-index:
+        7;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            1fr
+        );
+
+    gap:
+        10px;
+
+    padding:
+        0 74px;
+}
+
+
+.hw-button-wrap {
+
+    text-align:
+        center;
+}
+
+
+.hw-button {
+
+    width:
+        54px;
+
+    height:
+        54px;
+
+    margin:
+        auto;
+
+    border-radius:
+        50%;
+
+    border:
+        5px solid
+        rgba(
+            5,
+            8,
+            9,
+            .9
+        );
+
+    box-shadow:
+        inset 0 3px 6px
+        rgba(
+            255,
+            255,
+            255,
+            .25
+        ),
+        0 7px 7px
+        rgba(
+            0,
+            0,
+            0,
+            .7
+        );
+
+    transition:
+        transform .08s,
+        box-shadow .08s,
+        filter .08s;
+}
+
+
+.hw-button.white {
+    background:
+        #e5e7e5;
+}
+
+.hw-button.yellow {
+    background:
+        #eec629;
+}
+
+.hw-button.green {
+    background:
+        #26a957;
+}
+
+.hw-button.blue {
+    background:
+        #1779d8;
+}
+
+.hw-button.red {
+    background:
+        #d72d35;
+}
+
+
+.hw-button.pressed {
+
+    transform:
+        translateY(
+            6px
+        );
+
+    box-shadow:
+        inset 0 3px 9px
+        rgba(
+            0,
+            0,
+            0,
+            .4
+        ),
+        0 1px 1px
+        rgba(
+            0,
+            0,
+            0,
+            .7
+        );
+
+    filter:
+        brightness(
+            1.25
+        );
+}
+
+
+.hw-button.green.active {
+
+    box-shadow:
+        0 0 10px
+        var(--green),
+        0 0 25px
+        rgba(
+            55,
+            241,
+            124,
+            .8
+        );
+}
+
+
+.button-caption {
+
+    margin-top:
+        4px;
+
+    font-size:
+        8px;
+
+    color:
+        #8ea1b3;
+}
+
+
+/* ======================================================
+   DEVICE STATUS STRIP
+====================================================== */
+
+.device-status {
+
+    margin-top:
+        auto;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            7,
+            1fr
+        );
+
+    gap:
+        8px;
+
+    padding:
+        15px 12px;
+
+    border:
+        1px solid #263545;
+
+    border-radius:
+        13px;
+
+    background:
+        rgba(
+            7,
+            12,
+            18,
+            .82
+        );
+}
+
+
+.status-cell {
+
+    text-align:
+        center;
+}
+
+
+.status-dot {
+
+    width:
+        23px;
+
+    height:
+        23px;
+
+    margin:
+        auto;
+
+    border-radius:
+        50%;
+
+    border:
+        2px solid
+        #415062;
+
+    background:
+        #141c24;
+}
+
+
+.status-dot.green.on {
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 12px
+        var(--green);
+}
+
+
+.status-dot.blue.on {
+
+    background:
+        var(--blue);
+
+    box-shadow:
+        0 0 12px
+        var(--blue);
+}
+
+
+.status-dot.yellow.on {
+
+    background:
+        var(--yellow);
+
+    box-shadow:
+        0 0 12px
+        var(--yellow);
+}
+
+
+.status-dot.red.on {
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 12px
+        var(--red);
+}
+
+
+.status-name {
+
+    margin-top:
+        7px;
+
+    font-size:
+        9px;
+
+    color:
+        #d0d9e5;
+
+    font-weight:
+        800;
+}
+
+
+.status-sub {
+
+    margin-top:
+        2px;
+
+    font-size:
+        8px;
+
+    color:
+        #67788b;
+}
+
+
+/* ======================================================
+   RIGHT CONSOLE
+====================================================== */
+
+.console {
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        12px;
+}
+
+
+.current-card {
+
+    padding:
+        20px;
+
+    min-height:
+        126px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        58px 1fr auto;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+}
+
+
+.test-icon {
+
+    width:
+        46px;
+
+    height:
+        46px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        13px;
+
+    color:
+        var(--cyan);
+
+    background:
+        rgba(
+            70,
+            234,
+            214,
+            .06
+        );
+
+    font-size:
+        26px;
+}
+
+
+.current-title {
+
+    margin-top:
+        7px;
+
+    font-size:
+        25px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.5px;
+}
+
+
+.current-sub {
+
+    margin-top:
+        6px;
+
+    color:
+        #8394a8;
+
+    font-size:
+        12px;
+}
+
+
+.stop-pill {
+
+    border:
+        1px solid #31445b;
+
+    border-radius:
+        999px;
+
+    padding:
+        12px 18px;
+
+    color:
+        #b8c7d8;
+
+    font-size:
+        11px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    background:
+        #111b27;
+}
+
+
+.stop-square {
+
+    width:
+        12px;
+
+    height:
+        12px;
+
+    background:
+        var(--blue);
+}
+
+
+.metrics {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    gap:
+        10px;
+}
+
+
+.metric {
+
+    padding:
+        17px;
+
+    min-height:
+        102px;
+}
+
+
+.metric-value {
+
+    margin-top:
+        17px;
+
+    font-size:
+        23px;
+
+    font-weight:
+        850;
+}
+
+
+.metric-value.good {
+    color:
+        var(--green);
+}
+
+
+.metric-value.bad {
+    color:
+        var(--red);
+}
+
+
+.metric-unit {
+
+    font-size:
+        11px;
+
+    font-weight:
+        500;
+
+    color:
+        #7f90a3;
+}
+
+
+.middle-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        12px;
+}
+
+
+.timeline-card,
+.ai-card {
+
+    padding:
+        18px;
+
+    min-height:
+        188px;
+}
+
+
+.timeline-heading {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+}
+
+
+.timeline {
+
+    margin-top:
+        15px;
+}
+
+
+.timeline-item {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        10px 72px 1fr;
+
+    gap:
+        9px;
+
+    align-items:
+        center;
+
+    padding:
+        5px 0;
+
+    font-size:
+        11px;
+}
+
+
+.timeline-point {
+
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--blue);
+}
+
+
+.timeline-time {
+
+    color:
+        #66788b;
+
+    font-size:
+        9px;
+}
+
+
+.timeline-empty {
+
+    margin-top:
+        22px;
+
+    color:
+        #dce4ed;
+
+    font-weight:
+        750;
+}
+
+
+.timeline-help {
+
+    color:
+        #7d8ea0;
+
+    margin-top:
+        12px;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.6;
+}
+
+
+.ai-card {
+
+    border-top:
+        2px solid
+        var(--purple);
+}
+
+
+.ai-label {
+
+    color:
+        #ba97ff;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+}
+
+
+.ai-heading {
+
+    margin-top:
+        22px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        850;
+}
+
+
+.ai-body {
+
+    margin-top:
+        12px;
+
+    color:
+        #91a0b1;
+
+    line-height:
+        1.6;
+
+    font-size:
+        11px;
+}
+
+
+/* ======================================================
+   REPORT
+====================================================== */
+
+.report-card {
+
+    padding:
+        18px 20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+}
+
+
+.report-left {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+}
+
+
+.report-icon {
+
+    font-size:
+        27px;
+
+    color:
+        #bccbdf;
+}
+
+
+.report-title {
+
+    font-size:
+        17px;
+
+    font-weight:
+        850;
+
+    margin-top:
+        7px;
+}
+
+
+.report-sub {
+
+    color:
+        #8090a3;
+
+    margin-top:
+        6px;
+
+    font-size:
+        11px;
+}
+
+
+.report-button {
+
+    padding:
+        13px 20px;
+
+    border:
+        none;
+
+    border-radius:
+        999px;
+
+    background:
+        var(--white);
+
+    color:
+        #080b0f;
+
+    font-weight:
+        900;
+
+    cursor:
+        pointer;
+
+    min-width:
+        200px;
+
+    box-shadow:
+        0 6px 16px
+        rgba(
+            0,
+            0,
+            0,
+            .35
+        );
+}
+
+
+.report-button:active {
+
+    transform:
+        translateY(
+            3px
+        );
+}
+
+
+/* ======================================================
+   HISTORY
+====================================================== */
+
+.history-card {
+
+    padding:
+        17px;
+
+    min-height:
+        190px;
+}
+
+
+.history-head {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        14px;
+}
+
+
+.view-all {
+
+    color:
+        #50a4ff;
+
+    font-size:
+        10px;
+}
+
+
+.history-table {
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    table-layout:
+        fixed;
+}
+
+
+.history-table th {
+
+    color:
+        #75879a;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        .7px;
+
+    text-transform:
+        uppercase;
+
+    font-weight:
+        800;
+
+    text-align:
+        left;
+
+    padding:
+        9px 7px;
+
+    border-bottom:
+        1px solid #223040;
+}
+
+
+.history-table td {
+
+    font-size:
+        10px;
+
+    color:
+        #bac7d5;
+
+    padding:
+        10px 7px;
+
+    border-bottom:
+        1px solid #1d2936;
+
+    overflow:
+        hidden;
+
+    white-space:
+        nowrap;
+
+    text-overflow:
+        ellipsis;
+}
+
+
+.result-badge {
+
+    display:
+        inline-block;
+
+    padding:
+        4px 8px;
+
+    border-radius:
+        5px;
+
+    font-weight:
+        850;
+
+    font-size:
+        9px;
+}
+
+
+.result-badge.pass {
+
+    background:
+        rgba(
+            55,
+            241,
+            124,
+            .14
+        );
+
+    color:
+        var(--green);
+
+    border:
+        1px solid
+        rgba(
+            55,
+            241,
+            124,
+            .18
+        );
+}
+
+
+.result-badge.fail {
+
+    background:
+        rgba(
+            255,
+            77,
+            89,
+            .14
+        );
+
+    color:
+        var(--red);
+
+    border:
+        1px solid
+        rgba(
+            255,
+            77,
+            89,
+            .18
+        );
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media(
+    max-width:
+    1250px
+) {
+
+    .content {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .device-panel {
+
+        min-height:
+            auto;
+    }
+
+
+    .freewili-shell {
+
+        max-width:
+            690px;
+    }
+
+}
+
+
+@media(
+    max-width:
+    800px
+) {
+
+    .app {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .sidebar {
+
+        display:
+            none;
+    }
+
+
+    .header {
+
+        padding:
+            0 14px;
+    }
+
+
+    .header-subtitle,
+    .url-pill {
+
+        display:
+            none;
+    }
+
+
+    .content {
+
+        padding:
+            10px;
+    }
+
+
+    .metrics,
+    .middle-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .hardware-buttons {
+
+        padding:
+            0 40px;
+    }
+
+
+    .hw-button {
+
+        width:
+            46px;
+
+        height:
+            46px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =============================================
+     SIDEBAR
+============================================= -->
+
+<aside class="sidebar">
+
+
+<div class="side-logo">
+CT
+</div>
+
+
+<div class="side-item active">
+
+<div class="side-icon">
+⌂
+</div>
+
+<div>
+Home
+</div>
+
+</div>
+
+
+<div class="side-item">
+
+<div class="side-icon">
+⌁
+</div>
+
+<div>
+Tests
+</div>
+
+</div>
+
+
+<div class="side-item">
+
+<div class="side-icon">
+▤
+</div>
+
+<div>
+Reports
+</div>
+
+</div>
+
+
+<div class="side-item">
+
+<div class="side-icon">
+▦
+</div>
+
+<div>
+Devices
+</div>
+
+</div>
+
+
+<div class="side-item">
+
+<div class="side-icon">
+⚙
+</div>
+
+<div>
+Settings
+</div>
+
+</div>
+
+
+<div class="side-item side-bottom">
+
+<div class="side-icon">
+◉
+</div>
+
+</div>
+
+
+</aside>
+
+
+
+<div class="main">
+
+
+<!-- =============================================
+     HEADER
+============================================= -->
+
+<header class="header">
+
+
+<div class="brand-wrap">
+
+<div class="brand">
+Crash<span>Test</span>
+</div>
+
+<div class="header-subtitle">
+Firmware resilience validation console
+</div>
+
+</div>
+
+
+<div class="header-right">
+
+<div class="connection-pill">
+
+<div class="connection-dot"></div>
+
+<span>
+FREE-WILi connected
+</span>
+
+</div>
+
+<div class="url-pill">
+127.0.0.1:5050
+</div>
+
+</div>
+
+
+</header>
+
+
+
+<div class="content">
+
+
+<!-- =============================================
+     LEFT — FREE WILI
+============================================= -->
+
+<section class="device-panel card">
+
+
+<div class="device-panel-head">
+
+
+<div>
+
+<div class="device-title">
+FREE-WILi OG
+</div>
+
+<div class="device-subtitle">
+Real-time device display and controls
+</div>
+
+</div>
+
+
+<div class="live-pill">
+
+<div class="live-pill-dot"></div>
+
+LIVE MIRROR
+
+</div>
+
+
+</div>
+
+
+
+<div class="freewili-shell">
+
+
+<div class="post tl"></div>
+<div class="post tr"></div>
+<div class="post bl"></div>
+<div class="post br"></div>
+
+
+<!-- TOP LEDs -->
+
+<div class="hardware-leds">
+
+<div
+    class="hw-led green on"
+    id="topLed1"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed2"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed3"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed4"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed5"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed6"
+></div>
+
+<div
+    class="hw-led green on"
+    id="topLed7"
+></div>
+
+</div>
+
+
+
+<div class="hardware-middle">
+
+
+<div class="lcd">
+
+
+<div
+    class="lcd-header"
+    id="lcdHeader"
+>
+CRASHTEST
+</div>
+
+
+<div class="lcd-content">
+
+
+<div
+    class="lcd-state"
+    id="lcdState"
+>
+READY
+</div>
+
+
+<div
+    class="lcd-message"
+    id="lcdMessage"
+>
+Waiting for CrashTest
+</div>
+
+
+<div
+    class="lcd-action"
+    id="lcdAction"
+>
+YELLOW = START
+</div>
+
+
+</div>
+
+
+<div class="lcd-footer">
+FREE-WILi OG
+</div>
+
+
+</div>
+
+
+
+<div class="freewili-brand-strip">
+
+<div class="freewili-brand-text">
+FREE <span>WILI</span>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- BOTTOM BUTTONS -->
+
+<div class="hardware-buttons">
+
+
+<div class="hw-button-wrap">
+
+<div
+    class="hw-button white"
+    id="whiteButton"
+></div>
+
+<div class="button-caption">
+REPORT
+</div>
+
+</div>
+
+
+<div class="hw-button-wrap">
+
+<div
+    class="hw-button yellow"
+    id="yellowButton"
+></div>
+
+<div class="button-caption">
+START
+</div>
+
+</div>
+
+
+<div class="hw-button-wrap">
+
+<div
+    class="hw-button green"
+    id="greenButton"
+></div>
+
+<div class="button-caption">
+INJECT
+</div>
+
+</div>
+
+
+<div class="hw-button-wrap">
+
+<div
+    class="hw-button blue"
+    id="blueButton"
+></div>
+
+<div class="button-caption">
+AUX
+</div>
+
+</div>
+
+
+<div class="hw-button-wrap">
+
+<div
+    class="hw-button red"
+    id="redButton"
+></div>
+
+<div class="button-caption">
+STOP
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- DEVICE STATUS -->
+
+<div class="device-status">
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot green on"
+    id="statusPwr"
+></div>
+
+<div class="status-name">
+PWR
+</div>
+
+<div class="status-sub">
+Power
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot blue on"
+    id="statusLink"
+></div>
+
+<div class="status-name">
+LINK
+</div>
+
+<div class="status-sub">
+Connected
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot green"
+    id="statusDut"
+></div>
+
+<div class="status-name">
+DUT
+</div>
+
+<div class="status-sub">
+Target
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot yellow"
+    id="statusInj"
+></div>
+
+<div class="status-name">
+INJ
+</div>
+
+<div class="status-sub">
+Inject
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot red"
+    id="statusFault"
+></div>
+
+<div class="status-name">
+FLT
+</div>
+
+<div class="status-sub">
+Fault
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot green"
+    id="statusSafe"
+></div>
+
+<div class="status-name">
+SAFE
+</div>
+
+<div class="status-sub">
+Safe State
+</div>
+
+</div>
+
+
+<div class="status-cell">
+
+<div
+    class="status-dot blue"
+    id="statusRecovery"
+></div>
+
+<div class="status-name">
+REC
+</div>
+
+<div class="status-sub">
+Recover
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =============================================
+     RIGHT — TEST CONSOLE
+============================================= -->
+
+<section class="console">
+
+
+<div class="current-card card">
+
+
+<div class="test-icon">
+▦
+</div>
+
+
+<div>
+
+<div class="label">
+CURRENT TEST
+</div>
+
+<div class="current-title">
+Sensor / I2C Fault Injection
+</div>
+
+<div
+    class="current-sub"
+    id="liveLine"
+>
+Waiting for CrashTest...
+</div>
+
+</div>
+
+
+<div class="stop-pill">
+
+<div class="stop-square"></div>
+
+Stop Test
+
+</div>
+
+
+</div>
+
+
+
+<!-- METRICS -->
+
+<div class="metrics">
+
+
+<div class="metric card">
+
+<div class="label">
+DETECTION LATENCY
+</div>
+
+<div
+    class="metric-value"
+    id="latency"
+>
+—
+<span class="metric-unit">
+ms
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="metric card">
+
+<div class="label">
+SAFE STATE
+</div>
+
+<div
+    class="metric-value"
+    id="safe"
+>
+—
+</div>
+
+</div>
+
+
+
+<div class="metric card">
+
+<div class="label">
+RECOVERY
+</div>
+
+<div
+    class="metric-value"
+    id="recovery"
+>
+—
+</div>
+
+</div>
+
+
+
+<div class="metric card">
+
+<div class="label">
+ROOT CAUSE
+</div>
+
+<div
+    class="metric-value"
+    id="rootCause"
+>
+—
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="middle-grid">
+
+
+<!-- TIMELINE -->
+
+<div class="timeline-card card">
+
+<div class="timeline-heading">
+
+<div style="
+    font-size:22px;
+    color:#99b7da;
+">
+◷
+</div>
+
+<div class="label">
+TEST TIMELINE
+</div>
+
+</div>
+
+
+<div
+    class="timeline"
+    id="timeline"
+>
+
+<div class="timeline-empty">
+No test evidence yet.
+</div>
+
+<div class="timeline-help">
+Run a test to see telemetry,
+state changes and analysis timeline.
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- AI -->
+
+<div class="ai-card card">
+
+<div class="ai-label">
+✦ FETCH.AI ENGINEERING AGENT
+</div>
+
+<div class="ai-heading">
+Engineering assessment
+</div>
+
+<div
+    class="ai-body"
+    id="aiBody"
+>
+Complete a test to generate
+engineering analysis, root cause
+and recommendations.
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- REPORT -->
+
+<div class="report-card card">
+
+
+<div class="report-left">
+
+
+<div class="report-icon">
+▤
+</div>
+
+
+<div>
+
+<div class="label">
+ENGINEERING REPORT
+</div>
+
+<div class="report-title">
+Evidence package
+</div>
+
+<div class="report-sub">
+Raw telemetry + deterministic verdict + AI analysis
+</div>
+
+</div>
+
+
+</div>
+
+
+<button
+    class="report-button"
+    id="reportButton"
+>
+WHITE • OPEN REPORT
+</button>
+
+
+</div>
+
+
+
+<!-- HISTORY -->
+
+<div class="history-card card">
+
+
+<div class="history-head">
+
+<div class="label">
+RECENT CRASHTEST RUNS
+</div>
+
+<div class="view-all">
+View all →
+</div>
+
+</div>
+
+
+<table class="history-table">
+
+
+<thead>
+
+<tr>
+
+<th style="width:7%">
+#
+</th>
+
+<th style="width:27%">
+TEST ID
+</th>
+
+<th style="width:27%">
+ROOT CAUSE
+</th>
+
+<th style="width:13%">
+RESULT
+</th>
+
+<th style="width:13%">
+LATENCY
+</th>
+
+<th style="width:13%">
+SAFE
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="historyBody">
+
+<tr>
+
+<td colspan="6">
+No completed CrashTest runs yet.
+</td>
+
+</tr>
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* ======================================================
+   STATE HELPERS
+====================================================== */
+
+let lastButtonTime =
+    0;
+
+
+function setStatus(
+    id,
+    enabled
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+    if (!element)
+        return;
+
+    element
+        .classList
+        .toggle(
+            "on",
+            Boolean(enabled)
+        );
+
+}
+
+
+function setTopLedColor(
+    color
+) {
+
+    for (
+        let i = 1;
+        i <= 7;
+        i++
+    ) {
+
+        const led =
+            document.getElementById(
+                "topLed" + i
+            );
+
+
+        led.className =
+            "hw-led "
+            + color
+            + " on";
+    }
+}
+
+
+function pressButton(
+    buttonName
+) {
+
+    const map = {
+
+        WHITE:
+            "whiteButton",
+
+        YELLOW:
+            "yellowButton",
+
+        GREEN:
+            "greenButton",
+
+        BLUE:
+            "blueButton",
+
+        RED:
+            "redButton"
+
+    };
+
+
+    const id =
+        map[buttonName];
+
+
+    if (!id)
+        return;
+
+
+    const button =
+        document.getElementById(
+            id
+        );
+
+
+    button.classList.add(
+        "pressed"
+    );
+
+
+    setTimeout(
+        () => {
+
+            button.classList.remove(
+                "pressed"
+            );
+
+        },
+        450
+    );
+}
+
+
+/* ======================================================
+   LIVE DEVICE STATE
+====================================================== */
+
+function applyState(
+    incomingState
+) {
+
+    const state =
+        incomingState
+        || "IDLE";
+
+
+    setStatus(
+        "statusPwr",
+        true
+    );
+
+
+    setStatus(
+        "statusLink",
+        true
+    );
+
+
+    setStatus(
+        "statusDut",
+        [
+            "CHECKING",
+            "HEALTHY",
+            "INJECTING",
+            "FAULT",
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(
+            state
+        )
+    );
+
+
+    setStatus(
+        "statusInj",
+        state === "INJECTING"
+    );
+
+
+    setStatus(
+        "statusFault",
+        state === "FAULT"
+        || state === "FAIL"
+    );
+
+
+    setStatus(
+        "statusSafe",
+        [
+            "FAULT",
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(
+            state
+        )
+    );
+
+
+    setStatus(
+        "statusRecovery",
+        [
+            "RECOVERING",
+            "VERIFYING",
+            "PASS"
+        ].includes(
+            state
+        )
+    );
+
+
+    const header =
+        document.getElementById(
+            "lcdHeader"
+        );
+
+
+    const screen =
+        document.getElementById(
+            "lcdState"
+        );
+
+
+    const message =
+        document.getElementById(
+            "lcdMessage"
+        );
+
+
+    const action =
+        document.getElementById(
+            "lcdAction"
+        );
+
+
+    /* ------------------------------------------
+       HOME
+    ------------------------------------------ */
+
+    if (
+        state === "IDLE"
+        || state === "HOME"
+    ) {
+
+        header.style.background =
+            "#174723";
+
+
+        screen.textContent =
+            "READY";
+
+
+        message.textContent =
+            "CrashTest standing by";
+
+
+        action.textContent =
+            "YELLOW = START";
+
+
+        setTopLedColor(
+            "green"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       ARMED
+    ------------------------------------------ */
+
+    if (
+        state === "ARMED"
+    ) {
+
+        header.style.background =
+            "#7c6817";
+
+
+        screen.textContent =
+            "SYSTEM ARMED";
+
+
+        message.textContent =
+            "Fault injection ready";
+
+
+        action.textContent =
+            "GREEN = INJECT   RED = STOP";
+
+
+        setTopLedColor(
+            "yellow"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       CHECKING
+    ------------------------------------------ */
+
+    if (
+        state === "CHECKING"
+    ) {
+
+        header.style.background =
+            "#174a6c";
+
+
+        screen.textContent =
+            "CHECKING DUT";
+
+
+        message.textContent =
+            "Verifying healthy baseline";
+
+
+        action.textContent =
+            "RED = STOP";
+
+
+        setTopLedColor(
+            "blue"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       HEALTHY
+    ------------------------------------------ */
+
+    if (
+        state === "HEALTHY"
+    ) {
+
+        header.style.background =
+            "#174723";
+
+
+        screen.textContent =
+            "DUT HEALTHY";
+
+
+        message.textContent =
+            "Baseline verified";
+
+
+        action.textContent =
+            "Preparing injection";
+
+
+        setTopLedColor(
+            "green"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       INJECTING
+    ------------------------------------------ */
+
+    if (
+        state === "INJECTING"
+    ) {
+
+        header.style.background =
+            "#8a6411";
+
+
+        screen.textContent =
+            "INJECTING";
+
+
+        message.textContent =
+            "FREE-WILi fault active";
+
+
+        action.textContent =
+            "Sensor fault injected";
+
+
+        setTopLedColor(
+            "yellow"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       FAULT
+    ------------------------------------------ */
+
+    if (
+        state === "FAULT"
+    ) {
+
+        header.style.background =
+            "#871e26";
+
+
+        screen.textContent =
+            "FAULT DETECTED";
+
+
+        message.textContent =
+            "Validating safe-state response";
+
+
+        action.textContent =
+            "RED = STOP";
+
+
+        setTopLedColor(
+            "red"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       RECOVERY
+    ------------------------------------------ */
+
+    if (
+        state === "RECOVERING"
+        || state === "VERIFYING"
+    ) {
+
+        header.style.background =
+            "#243f83";
+
+
+        screen.textContent =
+            "RECOVERING";
+
+
+        message.textContent =
+            "Verifying telemetry";
+
+
+        action.textContent =
+            "RED = STOP";
+
+
+        setTopLedColor(
+            "blue"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       PASS
+    ------------------------------------------ */
+
+    if (
+        state === "PASS"
+    ) {
+
+        header.style.background =
+            "#17692b";
+
+
+        screen.textContent =
+            "PASS";
+
+
+        message.textContent =
+            "CrashTest complete";
+
+
+        action.textContent =
+            "RED = HOME";
+
+
+        setTopLedColor(
+            "green"
+        );
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       FAIL
+    ------------------------------------------ */
+
+    if (
+        state === "FAIL"
+    ) {
+
+        header.style.background =
+            "#8a2125";
+
+
+        screen.textContent =
+            "FAIL";
+
+
+        message.textContent =
+            "Fault not validated";
+
+
+        action.textContent =
+            "RED = HOME";
+
+
+        setTopLedColor(
+            "red"
+        );
+
+        return;
+    }
+
+}
+
+
+/* ======================================================
+   LIVE ENDPOINT
+====================================================== */
+
+async function updateLive() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/live"
+            );
+
+
+        const live =
+            await response.json();
+
+
+        applyState(
+            live.state
+        );
+
+
+        document.getElementById(
+            "liveLine"
+        ).textContent =
+            live.last_line
+            || "Waiting for CrashTest...";
+
+    }
+
+    catch (
+        error
+    ) {
+
+        document.getElementById(
+            "liveLine"
+        ).textContent =
+            "Dashboard waiting for CrashTest service.";
+
+    }
+
+}
+
+
+/* ======================================================
+   PHYSICAL BUTTON MIRROR
+====================================================== */
+
+async function updatePhysicalUI() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/ui"
+            );
+
+
+        if (!response.ok)
+            return;
+
+
+        const data =
+            await response.json();
+
+
+        const timestamp =
+            data.last_button_time
+            || 0;
+
+
+        if (
+            data.last_button
+            && timestamp
+            && timestamp
+                !== lastButtonTime
+        ) {
+
+            lastButtonTime =
+                timestamp;
+
+
+            pressButton(
+                data.last_button
+            );
+        }
+
+
+        if (
+            data.state
+            && data.state
+                !== "HOME"
+        ) {
+
+            applyState(
+                data.state
+            );
+        }
+
+    }
+
+    catch (
+        error
+    ) {
+
+        /* optional endpoint */
+
+    }
+
+}
+
+
+/* ======================================================
+   REPORTS
+====================================================== */
+
+async function updateReports() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/reports"
+            );
+
+
+        const reports =
+            await response.json();
+
+
+        if (
+            !reports.length
+        ) {
+
+            return;
+        }
+
+
+        const latest =
+            reports[0];
+
+
+        /* metrics */
+
+        document.getElementById(
+            "latency"
+        ).innerHTML =
+            latest.latency == null
+            ? "—"
+            : latest.latency
+                + ' <span class="metric-unit">ms</span>';
+
+
+        const safe =
+            document.getElementById(
+                "safe"
+            );
+
+
+        safe.textContent =
+            latest.safe;
+
+
+        safe.className =
+            "metric-value "
+            + (
+                latest.safe === "PASS"
+                ? "good"
+                : latest.safe === "FAIL"
+                ? "bad"
+                : ""
+            );
+
+
+        const recovery =
+            document.getElementById(
+                "recovery"
+            );
+
+
+        recovery.textContent =
+            latest.recovery;
+
+
+        recovery.className =
+            "metric-value "
+            + (
+                latest.recovery === "PASS"
+                ? "good"
+                : latest.recovery === "FAIL"
+                ? "bad"
+                : ""
+            );
+
+
+        document.getElementById(
+            "rootCause"
+        ).textContent =
+            latest.root_cause
+            || "—";
+
+
+        /* details */
+
+        const detailResponse =
+            await fetch(
+                "/api/report/"
+                + latest.test_id
+            );
+
+
+        const detail =
+            await detailResponse.json();
+
+
+        /* timeline */
+
+        const timeline =
+            document.getElementById(
+                "timeline"
+            );
+
+
+        timeline.innerHTML =
+            "";
+
+
+        for (
+            const event
+            of detail.timeline
+            || []
+        ) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "timeline-item";
+
+
+            row.innerHTML =
+                `
+                <div
+                    class="timeline-point"
+                ></div>
+
+                <div
+                    class="timeline-time"
+                >
+                    ${
+                        event.timestamp
+                        || ""
+                    }
+                </div>
+
+                <div>
+                    ${
+                        event.message
+                    }
+                </div>
+                `;
+
+
+            timeline.appendChild(
+                row
+            );
+        }
+
+
+        if (
+            !(
+                detail.timeline
+                || []
+            ).length
+        ) {
+
+            timeline.innerHTML =
+                `
+                <div
+                    class="timeline-empty"
+                >
+                    No test evidence yet.
+                </div>
+                `;
+        }
+
+
+        /* AI */
+
+        const ai =
+            detail.ai
+            || {};
+
+
+        document.getElementById(
+            "aiBody"
+        ).textContent =
+            ai.executive_summary
+            || ai.engineering_analysis
+            || ai.raw
+            || "AI engineering analysis is pending.";
+
+
+        /* history */
+
+        const body =
+            document.getElementById(
+                "historyBody"
+            );
+
+
+        body.innerHTML =
+            "";
+
+
+        let index =
+            reports.length;
+
+
+        for (
+            const report
+            of reports.slice(
+                0,
+                8
+            )
+        ) {
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const resultClass =
+                report.verdict
+                === "PASS"
+                ? "pass"
+                : "fail";
+
+
+            tr.innerHTML =
+                `
+                <td>
+                    ${
+                        String(
+                            index
+                        ).padStart(
+                            3,
+                            "0"
+                        )
+                    }
+                </td>
+
+                <td>
+                    ${
+                        report.test_id
+                        || "—"
+                    }
+                </td>
+
+                <td>
+                    ${
+                        report.root_cause
+                        || "—"
+                    }
+                </td>
+
+                <td>
+                    <span
+                        class="
+                            result-badge
+                            ${resultClass}
+                        "
+                    >
+                        ${
+                            report.verdict
+                        }
+                    </span>
+                </td>
+
+                <td>
+                    ${
+                        report.latency
+                        == null
+                        ? "—"
+                        : report.latency
+                            + " ms"
+                    }
+                </td>
+
+                <td>
+                    ${
+                        report.safe
+                        || "—"
+                    }
+                </td>
+                `;
+
+
+            body.appendChild(
+                tr
+            );
+
+
+            index--;
+        }
+
+    }
+
+    catch (
+        error
+    ) {
+
+        /* no reports yet */
+
+    }
+
+}
+
+
+/* ======================================================
+   REPORT BUTTON
+====================================================== */
+
+function openReport() {
+
+    pressButton(
+        "WHITE"
+    );
+
+
+    window.open(
+        "/latest-report",
+        "_blank"
+    );
+
+}
+
+
+document.getElementById(
+    "whiteButton"
+).addEventListener(
+    "click",
+    openReport
+);
+
+
+document.getElementById(
+    "reportButton"
+).addEventListener(
+    "click",
+    openReport
+);
+
+
+/* ======================================================
+   UPDATE LOOP
+====================================================== */
+
+async function refresh() {
+
+    await updateLive();
+
+    await updatePhysicalUI();
+
+    await updateReports();
+
+}
+
+
+refresh();
+
+
+setInterval(
+    refresh,
+    450
+);
+
+</script>
+
+
+</body>
+</html>
+
+<style>
+
+/* =====================================================
+   CRASHTEST LCD LAYOUT FIX
+   Prevent footer/action text overlap
+===================================================== */
+
+.lcd {
+    display: flex;
+    flex-direction: column;
+}
+
+.lcd-header {
+    flex: 0 0 52px;
+}
+
+.lcd-content {
+    flex: 1;
+    min-height: 0;
+
+    padding:
+        22px
+        18px
+        10px;
+}
+
+.lcd-state {
+    margin: 0;
+
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.lcd-message {
+    margin-top: 20px;
+
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.lcd-action {
+    margin-top: 15px;
+
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+/*
+ * Footer now participates in layout instead
+ * of floating on top of other text.
+ */
+.lcd-footer {
+    position: static;
+
+    left: auto;
+    bottom: auto;
+
+    flex: 0 0 auto;
+
+    padding:
+        0
+        18px
+        15px;
+
+    margin-top: auto;
+
+    font-size: 12px;
+}
+
+</style>
+
