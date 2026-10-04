@@ -115,7 +115,7 @@ Deterministic PASS / FAIL
 The FREE-WILi OG acts like a small embedded validation console rather than a passive development board.
 
 <p align="center">
-  <img src="docs/images/hardware-pass.png" alt="FREE-WILi OG showing CrashTest PASS" width="72%">
+  <img src="docs/images/hardware-pass.jpeg" alt="FREE-WILi OG showing CrashTest PASS" width="72%">
 </p>
 
 The physical UI communicates test state directly:
@@ -145,12 +145,12 @@ The physical UI communicates test state directly:
 
 <table>
 <tr>
-<td align="center"><b>Armed</b><br><img src="docs/images/hardware-armed.png" width="360"></td>
-<td align="center"><b>Recovering</b><br><img src="docs/images/hardware-recovering.png" width="360"></td>
+<td align="center"><b>Armed</b><br><img src="docs/images/hardware-armed.jpeg" width="360"></td>
+<td align="center"><b>Recovering</b><br><img src="docs/images/hardware-recovering.jpeg" width="360"></td>
 </tr>
 <tr>
-<td align="center"><b>Pass</b><br><img src="docs/images/hardware-pass.png" width="360"></td>
-<td align="center"><b>Fail</b><br><img src="docs/images/hardware-fail.png" width="360"></td>
+<td align="center"><b>Pass</b><br><img src="docs/images/hardware-pass.jpeg" width="360"></td>
+<td align="center"><b>Fail</b><br><img src="docs/images/hardware-fail.jpeg" width="360"></td>
 </tr>
 </table>
 
@@ -366,15 +366,6 @@ It includes:
   <img src="docs/images/dashboard-pass.png" alt="CrashTest live dashboard PASS state" width="100%">
 </p>
 
-## Failed runs are first-class results
-
-CrashTest is not designed to hide failures. A failed run remains visible with its root cause, timeline, and evidence.
-
-<p align="center">
-  <img src="docs/images/dashboard-fail.png" alt="CrashTest dashboard showing a failed validation run" width="100%">
-</p>
-
----
 
 # Engineering report generation
 
@@ -482,13 +473,11 @@ CrashTest/
 |
 |-- docs/
 |   |-- images/
-|   |   |-- hardware-pass.png
-|   |   |-- hardware-fail.png
-|   |   |-- hardware-armed.png
-|   |   |-- hardware-recovering.png
+|   |   |-- hardware-pass.jpeg
+|   |   |-- hardware-fail.jpeg
+|   |   |-- hardware-armed.jpeg
+|   |   |-- hardware-recovering.jpeg
 |   |   |-- dashboard-pass.png
-|   |   |-- dashboard-fail.png
-|   |   |-- dashboard-v1.png
 |   |   `-- report-overview.png
 |   `-- sample-report.pdf
 |
@@ -605,20 +594,6 @@ Break the sensor path before the test and demonstrate that CrashTest refuses to 
 
 ---
 
-# Development journey
-
-CrashTest was built iteratively, and the dashboard changed as the hardware interaction became clearer.
-
-### Early dashboard
-
-<p align="center">
-  <img src="docs/images/dashboard-v1.png" alt="Earlier CrashTest dashboard iteration" width="90%">
-</p>
-
-The final dashboard mirrors the physical hierarchy more closely: **LEDs on top, LCD in the center, buttons on the bottom**.
-
----
-
 # Design decisions
 
 ## Why use a dedicated fault input first?
@@ -729,20 +704,18 @@ It includes the deterministic result, system configuration, fault definition, te
 
 # Screenshots and media included in this repository
 
-All current project images used during the build are retained under `docs/images/`:
+The README intentionally references only assets that are present under `docs/images/`:
 
 ```text
-hardware-pass.png
-hardware-fail.png
-hardware-armed.png
-hardware-recovering.png
 dashboard-pass.png
-dashboard-fail.png
-dashboard-v1.png
+hardware-armed.jpeg
+hardware-fail.jpeg
+hardware-pass.jpeg
+hardware-recovering.jpeg
 report-overview.png
 ```
 
-The repository includes the main hardware states, dashboard views, and sample report used to demonstrate the project.
+These files cover the physical FREE-WILi states, the completed PASS dashboard, and the generated engineering report.
 
 ---
 
